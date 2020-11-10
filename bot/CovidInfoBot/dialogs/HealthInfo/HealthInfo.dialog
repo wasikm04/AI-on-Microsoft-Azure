@@ -1,0 +1,32 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "F404Sz",
+    "name": "HealthInfo",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "fFLNY2"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "yVm6w7"
+          },
+          "activity": "${SendActivity_yVm6w7()}"
+        }
+      ]
+    }
+  ],
+  "generator": "HealthInfo.lg",
+  "recognizer": "HealthInfo.lu.qna",
+  "id": "HealthInfo"
+}

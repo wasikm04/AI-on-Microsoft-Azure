@@ -1,0 +1,11 @@
+[import](common.lg)
+
+# ChoiceInput_Prompt_0D4WyT()
+- What kind of advise do you need? Select category of advice that you are intrested in or click Other and write it.
+
+# SendActivity_5yVqc1()
+- In order to get information about virus tests type question like 'Where can I make test.'
+# SendActivity_AzDwfb()
+ - I got ${user.advice} which is not any of the above categories. Try again.
+# SendActivity_x2sHSi()
+- Type your question below and we will do everything we can to find answer for you.

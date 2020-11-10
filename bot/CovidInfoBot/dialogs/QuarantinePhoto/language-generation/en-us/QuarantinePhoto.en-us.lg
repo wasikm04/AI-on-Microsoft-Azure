@@ -1,0 +1,35 @@
+[import](common.lg)
+[import](covidinfobot.lg)
+
+# ChoiceInput_Prompt_kgqhbp()
+- Would you like to attach file or write link to it?
+# TextInput_Prompt_BOllab()
+- Pass the photo address
+# SendActivity_ROB1zJ()
+- ${heroCard(user.url)}
+# TextInput_Prompt_5p8jN5()
+-  Are you sure that you want to send that photo? Type yes if so.
+# TextInput_Prompt_8pzZAo()
+-  Are you sure that you want to send that photo? Type yes if so.
+# SendActivity_JaX7Bb()
+-  I got ${user.choice} which is not any of the above categories. Try again.
+# SendActivity_IU1da2()
+- Something happen and we receive and error connected with your photo: ${user.fileResponse.content.Message}
+# SendActivity_Zt2ovW()
+- The photo you send does include ${user.fileResponse.content.Count} people face(s). We are ready to pass this evidence to local sanitary inspectorate.  
+# SendActivity_IIWdhH()
+- Based on our analysis we cannot classify your photo as one with person face on it. In order to complete your quarantine check please contact your local sanitary inspectorate directly.
+# SendActivity_2XXRR5()
+- The photo you send does include ${user.fileResponse.content.Count} people face(s). We are ready to pass this evidence to local sanitary inspectorate.  
+# SendActivity_6grmiw()
+- Based on our analysis we cannot classify your photo as one with person face on it. In order to complete your quarantine check please contact your local sanitary inspectorate directly.
+# SendActivity_J8Oiy9()
+- Something happen and we receive and error connected with your photo: ${user.fileResponse.content.Message}
+# SendActivity_Y7noNe()
+- Photo send is cancelled, you can type again your intent and select another photo
+# SendActivity_EjaPKa()
+- Photo send is cancelled, you can type again your intent and select another photo
+# AttachmentInput_Prompt_4F0bQ7()
+- Attach photo of you now
+# SendActivity_8vVHio()
+- ${heroCard(user.file.contentUrl)}

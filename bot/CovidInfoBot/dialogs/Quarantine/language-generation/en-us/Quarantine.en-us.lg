@@ -1,0 +1,28 @@
+[import](common.lg)
+[import](covidinfobot.lg)
+
+# ChoiceInput_Prompt_vZiVvr()
+-What kind of help or information do you need?
+-Choose category of your interest.
+# SendActivity_ebTkb8()
+- If you are living alone and you are not able to make grocery and pharmacy shopping please call your local sanitary inspectorate to plan the course of home quarantine.  Do the same if you cannot work remotely and you need sick leave for your employer. To get more information ask another questions.
+
+
+# SendActivity_JJgvk0()
+[HeroCard
+    text = Find your local sanitary inspectorate on this [website](https://www.google.com/search?client=opera&hs=N4X&sxsrf=ALeKk012-VlSIrtfLFjCHmTDIuHlQTEvFg%3A1604859335991&ei=xzWoX7P-O-ixrgS5mp-oAQ&q=Powiatowy+Inspektor+Sanitarny&oq=Powiatowy+Inspektor+Sanitarny&gs_lcp=CgZwc3ktYWIQAzIECAAQQzIECAAQQzIECAAQQzIECAAQQzICCAAyAggAMgIIADICCAAyAggAMgIIADoHCCMQsAIQJ1CwNliwNmDhQGgAcAB4AIABpAGIAakCkgEDMC4ymAEAoAECoAEBqgEHZ3dzLXdpesABAQ&sclient=psy-ab&ved=0ahUKEwjz_Yr1xvPsAhXomIsKHTnNBxUQ4dUDCAw&uact=5)
+    image = https://www.google.com/search?client=opera&hs=N4X&sxsrf=ALeKk012-VlSIrtfLFjCHmTDIuHlQTEvFg%3A1604859335991&ei=xzWoX7P-O-ixrgS5mp-oAQ&q=Powiatowy+Inspektor+Sanitarny&oq=Powiatowy+Inspektor+Sanitarny&gs_lcp=CgZwc3ktYWIQAzIECAAQQzIECAAQQzIECAAQQzIECAAQQzICCAAyAggAMgIIADICCAAyAggAMgIIADoHCCMQsAIQJ1CwNliwNmDhQGgAcAB4AIABpAGIAakCkgEDMC4ymAEAoAECoAEBqgEHZ3dzLXdpesABAQ&sclient=psy-ab&ved=0ahUKEwjz_Yr1xvPsAhXomIsKHTnNBxUQ4dUDCAw&uact=5
+]
+
+# SendActivity_WVB6Wb()
+- In order to stay safe and not danger other people you must respect quarantine conditions under pain of financial penalty.
+# SendActivity_7sb0Vs()
+- Some of the restrictions while on quarantine you can find [here](https://www.canada.ca/en/public-health/services/publications/diseases-conditions/coronavirus-disease-covid-19-how-to-self-isolate-home-exposed-no-symptoms.html)
+
+# SendActivity_vYu4dl()
+[HeroCard
+	text= In order to contact local sanitary inspectorate use this [website]() If you are experiencing violence, it may be helpful to reach out to family, friends and neighbors, to seek support from a hotline or, if safe, from online service for survivors of violence. Find out if local services (e.g. shelters, counselling) are open and reach out to them if available. In case the violence against you or your children escalates call an emergency number.
+    image = https://pbs.twimg.com/media/EXZivcLXsAAF1ce.jpg
+    ]
+# ConfirmInput_Prompt_R06QPj()
+-  Do you need more information about quarantine?

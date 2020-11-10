@@ -1,0 +1,48 @@
+[import](common.lg)
+
+# SendActivity_266608()
+- Welcome. You can type ‘about’ to learn more or ask question you want. You can also check the WHO [website](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public)
+# SendActivity_771838()
+[HeroCard
+    title = Help
+    text = Type 'description' if you just want to get know what it is all for. Available categories for you to talk about are following: Covid-19 information, Quarantine, Health problems, Advices. 
+    image = https://www.heyportugal.com/images/sampledata/SitePictures/Life/112.jpg
+]
+
+
+# SendActivity_exB3mc()
+- I am Covid-Bot and i am here to advise you in some cases connected to your health, organization and healthcare. In every moment you can type help or cancel to quit current dialog.
+
+# TextInput_Prompt_dCZNwU()
+[Activity
+    Text = ${expandText(@answer)}
+    SuggestedActions = ${foreach(turn.recognized.answers[0].context.prompts, x, x.displayText)}
+]
+
+# SendActivity_FbuO8I()
+- ${expandText(@answer)}
+
+# heroCard(contentUrl)
+[HeroCard
+    title = Your Photo
+    image = ${contentUrl}
+]
+
+
+# SendActivity_AQcFWZ()
+-You can start asking questions from the beginning
+-You can start from the beginning
+# SendActivity_eqE7eL()
+- You can write your questions or type 'help'.
+# SendActivity_ElRGTZ()
+- I am not sure what information do you want. Could you retype your question in other words?
+- I do not understand, please ask another question.
+
+
+# TextInput_Prompt_KVqBr3()
+[Activity
+    Attachments = ${json(AdaptiveCardJson())}
+]
+
+# SendActivity_tiezib()
+- Sure, no worries.

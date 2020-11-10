@@ -1,0 +1,487 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "CovidInfoBot",
+      "description": "",
+      "id": "sN18xg"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "recognizer": "covidinfobot.lu.qna",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720",
+        "name": "Welcome"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item"
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "266608",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_266608()}"
+                }
+              ]
+            }
+          ],
+          "value": "dialog.foreach.value"
+        },
+        {
+          "$kind": "Microsoft.LogAction",
+          "$designer": {
+            "id": "cND6Q5"
+          },
+          "text": "${user.file}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "242409"
+      },
+      "condition": "#Help.Score >= 0.8",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "771838",
+            "name": "Send a response"
+          },
+          "activity": "${SendActivity_771838()}"
+        }
+      ],
+      "intent": "Help"
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "777383"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "ElRGTZ"
+          },
+          "activity": "${SendActivity_ElRGTZ()}",
+          "disabled": true
+        },
+        {
+          "$kind": "Microsoft.QnAMakerDialog",
+          "$designer": {
+            "id": "284337",
+            "name": "Connect to QnA Knowledgebase"
+          },
+          "knowledgeBaseId": "=settings.qna.knowledgebaseid",
+          "endpointKey": "=settings.qna.endpointkey",
+          "hostname": "=settings.qna.hostname",
+          "threshold": 0.3,
+          "activeLearningCardTitle": "Did you mean:",
+          "cardNoMatchText": "None of the above.",
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "top": 3,
+          "noAnswer": "Sorry, I did not find an answer."
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "jLYUvU",
+        "name": "Description"
+      },
+      "intent": "Description",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "exB3mc"
+          },
+          "activity": "${SendActivity_exB3mc()}"
+        }
+      ],
+      "condition": "#Description.Score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnQnAMatch",
+      "$designer": {
+        "id": "DmIy0E"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "p6SESe"
+          },
+          "condition": "count(turn.recognized.answers[0].context.prompts) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "8cyxf9"
+              },
+              "property": "dialog.qnaContext",
+              "value": "=turn.recognized.answers[0].context.prompts"
+            },
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "Z0mJEm"
+              },
+              "maxTurnCount": 3,
+              "alwaysPrompt": true,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_dCZNwU()}",
+              "property": "turn.qnaMultiTurnResponse"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "QLX45K"
+              },
+              "property": "turn.qnaMatchFromContext",
+              "value": "=where(dialog.qnaContext, item, item.displayText == turn.qnaMultiTurnResponse)"
+            },
+            {
+              "$kind": "Microsoft.DeleteProperty",
+              "$designer": {
+                "id": "L1KBU5"
+              },
+              "property": "dialog.qnaContext"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "yvG3u3"
+              },
+              "condition": "turn.qnaMatchFromContext && count(turn.qnaMatchFromContext) > 0",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cIKnPN"
+                  },
+                  "property": "turn.qnaIdFromPrompt",
+                  "value": "=turn.qnaMatchFromContext[0].qnaId"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "7nzeEc"
+              },
+              "eventName": "activityReceived",
+              "eventValue": "=turn.activity"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "SOlEgA"
+              },
+              "activity": "${SendActivity_FbuO8I()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "csJMfA",
+        "name": "AdviceTrigger"
+      },
+      "intent": "AdviseTrigger",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3vsoes"
+          },
+          "activityProcessed": true,
+          "dialog": "Advise"
+        }
+      ],
+      "condition": "#AdviseTrigger.Score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "kOdNn9",
+        "name": "HealthTrigger"
+      },
+      "intent": "HealthTrigger",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "gDNEn1"
+          },
+          "activityProcessed": true,
+          "dialog": "HealthInfo"
+        }
+      ],
+      "condition": "#HealthTrigger.Score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "AjPSDr",
+        "name": "QuarantineTrigger"
+      },
+      "intent": "QuarantineTrigger",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "vVLwHN"
+          },
+          "activityProcessed": true,
+          "dialog": "Quarantine"
+        }
+      ],
+      "condition": "#QuarantineTrigger.Score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "dp6QBZ",
+        "name": "Cancel"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "IvXgBB"
+          },
+          "activityProcessed": true
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "AQcFWZ"
+          },
+          "activity": "${SendActivity_AQcFWZ()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "7TzKF1",
+        "name": "QuarantinePhoto"
+      },
+      "intent": "QuarantinePhoto",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2bwRxZ"
+          },
+          "activityProcessed": true,
+          "dialog": "QuarantinePhoto"
+        }
+      ],
+      "condition": "#QuarantinePhoto.Score > 0.5"
+    },
+    {
+      "$kind": "Microsoft.OnCancelDialog",
+      "$designer": {
+        "id": "BpKsjs"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "eqE7eL"
+          },
+          "activity": "${SendActivity_eqE7eL()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnChooseIntent",
+      "$designer": {
+        "id": "sm956F"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "haN1lp"
+          },
+          "assignments": [
+            {
+              "value": "=turn.recognized.candidates[0]",
+              "property": "dialog.luisResult"
+            },
+            {
+              "property": "dialog.qnaResult",
+              "value": "=turn.recognized.candidates[1]"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "lBF2rb"
+          },
+          "condition": "dialog.luisResult.score >= 0.9 && dialog.qnaResult.score <= 0.5",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "SUnGWb"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.luisResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "8r3E3V"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mKwvO6"
+          },
+          "condition": "dialog.luisResult.score <= 0.5 && dialog.qnaResult.score >= 0.9",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "G0WBWx"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.qnaResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "sp79zl"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "55azbs"
+          },
+          "condition": "dialog.qnaResult.score <= 0.05",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "4ImXhP"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog.luisResult.result"
+            },
+            {
+              "$kind": "Microsoft.BreakLoop",
+              "$designer": {
+                "id": "TWWYw6"
+              }
+            }
+          ],
+          "top": 3,
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "cardNoMatchText": "None of the above.",
+          "activeLearningCardTitle": "Did you mean:",
+          "threshold": 0.3,
+          "noAnswer": "Sorry, I did not find an answer.",
+          "hostname": "=settings.qna.hostname"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "ErE2OP"
+          },
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_KVqBr3()}",
+          "property": "turn.intentChoice",
+          "value": "=@userChosenIntent",
+          "top": 3,
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "cardNoMatchText": "None of the above.",
+          "activeLearningCardTitle": "Did you mean:",
+          "threshold": 0.3,
+          "noAnswer": "Sorry, I did not find an answer.",
+          "hostname": "=settings.qna.hostname",
+          "endpointKey": "=settings.qna.endpointkey",
+          "knowledgeBaseId": "=settings.qna.knowledgebaseid"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "fEwV2f"
+          },
+          "condition": "turn.intentChoice != 'none'",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "IarRoZ"
+              },
+              "eventName": "recognizedIntent",
+              "eventValue": "=dialog[turn.intentChoice].result"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "xNiTPk"
+              },
+              "activity": "${SendActivity_tiezib()}"
+            }
+          ],
+          "top": 3,
+          "cardNoMatchResponse": "Thanks for the feedback.",
+          "cardNoMatchText": "None of the above.",
+          "activeLearningCardTitle": "Did you mean:",
+          "threshold": 0.3,
+          "noAnswer": "Sorry, I did not find an answer.",
+          "hostname": "=settings.qna.hostname",
+          "endpointKey": "=settings.qna.endpointkey",
+          "knowledgeBaseId": "=settings.qna.knowledgebaseid"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "covidinfobot.lg",
+  "id": "CovidInfoBot"
+}

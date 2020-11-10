@@ -1,0 +1,8 @@
+{
+    "$kind": "Microsoft.MultiLanguageRecognizer",
+    "id": "LUIS_Quarantine",
+    "recognizers": {
+        "en-us": "Quarantine.en-us.lu",
+        "": "Quarantine.en-us.lu"
+    }
+}

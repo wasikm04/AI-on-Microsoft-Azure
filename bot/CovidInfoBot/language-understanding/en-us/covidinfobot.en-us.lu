@@ -1,0 +1,53 @@
+> See https://aka.ms/lu-file-format to learn about supported LU concepts.
+
+> Help intent and its utterances
+
+# Help
+- help
+- i need help
+- please help
+- can you please help
+# Description
+- description
+- Show me description
+- what do you do
+- what is this bot for
+# AdviseTrigger
+-I need advice
+-I do not know what to do
+-I am not sure what i am supposed to do
+
+# QuarantineTrigger
+- I am on quarantine
+- What should i do on quarantine
+- quarantine
+- quarantine Information
+- What i should not do on quarantine
+- Can i go to shop while on quarantine
+-Where should i get food from while on quarantine
+- I need help with my shopping while i am on quarantine
+
+# HealthTrigger
+- I am feeling sick
+- I am not feeling good
+- I feel terrible
+- I have fever
+- I have headache
+- My bones and muscles hurt
+- I might have an illness
+-I might be ill
+- Health
+# Cancel
+- cancel
+- cancelling
+- quit
+# QuarantinePhoto
+- Can I confirm my compliance of the quarantine conditions?
+- quarantine photo
+- Can I send photo of me on quarantine?
+- I want send required photo
+- photo
+- should i send photo of me
+-confirmation of presence with a photo
+- i want quarantine check
+- I want to make my quarantine check

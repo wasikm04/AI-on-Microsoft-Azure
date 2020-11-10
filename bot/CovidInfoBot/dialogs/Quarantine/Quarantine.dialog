@@ -1,0 +1,176 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "3Rv9fV",
+    "name": "Quarantine",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "u0kvsd"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "vZiVvr"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "prompt": "${ChoiceInput_Prompt_vZiVvr()}",
+          "property": "user.quarantine.choice",
+          "style": "heroCard",
+          "choices": [
+            "Rules",
+            "Support",
+            "Contact"
+          ],
+          "recognizerOptions": {
+            "recognizeOrdinals": true
+          }
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "a2iCTi"
+          },
+          "condition": "user.quarantine.choice",
+          "cases": [
+            {
+              "value": "Support",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ebTkb8"
+                  },
+                  "activity": "${SendActivity_ebTkb8()}"
+                }
+              ]
+            },
+            {
+              "value": "Rules",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "WVB6Wb"
+                  },
+                  "activity": "${SendActivity_WVB6Wb()}"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "7sb0Vs"
+                  },
+                  "activity": "${SendActivity_7sb0Vs()}"
+                }
+              ]
+            },
+            {
+              "value": "Contact",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "vYu4dl"
+                  },
+                  "activity": "${SendActivity_vYu4dl()}"
+                }
+              ]
+            }
+          ],
+          "default": []
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "R06QPj"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "user.confirmation",
+          "confirmChoices": [
+            "Yes",
+            "No"
+          ],
+          "prompt": "${ConfirmInput_Prompt_R06QPj()}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Wd6u5W"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.DeleteProperties",
+              "$designer": {
+                "id": "wkiL5E"
+              },
+              "properties": [
+                "user.quarantine",
+                "user.confirmation"
+              ]
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "61cz0l"
+              },
+              "activityProcessed": true
+            }
+          ],
+          "elseActions": [],
+          "condition": "user.confirmation == True"
+        },
+        {
+          "$kind": "Microsoft.DeleteProperty",
+          "$designer": {
+            "id": "twrJrF"
+          },
+          "property": "user.confirmation"
+        },
+        {
+          "$kind": "Microsoft.DeleteProperty",
+          "$designer": {
+            "id": "HiOOyE"
+          },
+          "property": "user.quarantine"
+        }
+      ]
+    }
+  ],
+  "generator": "Quarantine.lg",
+  "recognizer": "Quarantine.lu.qna",
+  "id": "Quarantine"
+}

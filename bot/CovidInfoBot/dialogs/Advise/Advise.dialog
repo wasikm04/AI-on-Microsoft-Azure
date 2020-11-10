@@ -1,0 +1,150 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "UPtsUS",
+    "name": "Advice",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "i59KUp"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "0D4WyT"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": true,
+          "prompt": "${ChoiceInput_Prompt_0D4WyT()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "recognizerOptions": {
+            "recognizeOrdinals": true,
+            "recognizeNumbers": true
+          },
+          "property": "user.advice",
+          "style": "heroCard",
+          "choices": [
+            "Health",
+            "Quarantine",
+            "Covid Test",
+            "Other advice"
+          ],
+          "outputFormat": "value"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "Jd4ioG"
+          },
+          "condition": "user.advice",
+          "cases": [
+            {
+              "value": "Other advice",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "x2sHSi"
+                  },
+                  "activity": "${SendActivity_x2sHSi()}"
+                }
+              ]
+            },
+            {
+              "value": "Quarantine",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "J6E80g"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "Quarantine"
+                }
+              ]
+            },
+            {
+              "value": "Covid test",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "5yVqc1"
+                  },
+                  "activity": "${SendActivity_5yVqc1()}"
+                },
+                {
+                  "$kind": "Microsoft.QnAMakerDialog",
+                  "$designer": {
+                    "id": "1ENO8Y"
+                  },
+                  "knowledgeBaseId": "=settings.qna.knowledgebaseid",
+                  "endpointKey": "=settings.qna.endpointkey",
+                  "hostname": "=settings.qna.hostname",
+                  "noAnswer": "Sorry, I did not find an answer.",
+                  "threshold": 0.3,
+                  "activeLearningCardTitle": "Did you mean:",
+                  "cardNoMatchText": "None of the above.",
+                  "cardNoMatchResponse": "Thanks for the feedback.",
+                  "top": 3,
+                  "isTest": false
+                }
+              ]
+            },
+            {
+              "value": "Health",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "QWkfXw"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "HealthInfo"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "AzDwfb"
+              },
+              "activity": "${SendActivity_AzDwfb()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperty",
+          "$designer": {
+            "id": "8IvxpR"
+          },
+          "property": "user.advice"
+        }
+      ]
+    }
+  ],
+  "generator": "Advise.lg",
+  "recognizer": "Advise.lu.qna",
+  "id": "Advise"
+}

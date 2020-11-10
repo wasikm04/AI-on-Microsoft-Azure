@@ -1,0 +1,18 @@
+
+# QuarantinePhoto
+- Can I confirm my compliance of the quarantine conditions?
+- quarantine photo
+- Can I send photo of me on quarantine?
+- I want send required photo
+- photo
+# ChoiceInput_Response_vZiVvr
+-I would like to know
+
+# TextInput_Response_El2ddv
+- {user.confirmation}
+- {user.confirmation} I want that photo
+- I am sure, {user.confirmation}
+
+# ConfirmInput_Response_R06QPj
+- ${user.confirmation}
+- ${user.confirmation}, I do need more information

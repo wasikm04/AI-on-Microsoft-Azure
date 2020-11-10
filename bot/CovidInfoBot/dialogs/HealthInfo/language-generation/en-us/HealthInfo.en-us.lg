@@ -1,0 +1,12 @@
+[import](common.lg)
+
+# SendActivity_yVm6w7()
+- ${HealthCard()}
+# HealthCard
+[ThumbnailCard
+    title = Important!
+    text = If you are having fever or cough and have chronic diseases of heart or lungs please contact your local healthcare services by calling 112.
+    image = https://fotoomnia.com/zdjecia/thu/e60d2c1f04b5f4896d87eb9a46ce1631.jpg
+]
+# SendActivity_41Rafo()
+-

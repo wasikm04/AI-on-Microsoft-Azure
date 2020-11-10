@@ -1,0 +1,394 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "neoQfa",
+    "name": "QuarantinePhoto",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "retg4l"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "kgqhbp"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_kgqhbp()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true
+          },
+          "style": "suggestedAction",
+          "choices": [
+            "Attachment",
+            "Link"
+          ],
+          "property": "user.choice"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "UWdwle"
+          },
+          "condition": "user.choice",
+          "cases": [
+            {
+              "value": "Link",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "BOllab"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${TextInput_Prompt_BOllab()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "property": "user.url"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ROB1zJ"
+                  },
+                  "activity": "${SendActivity_ROB1zJ()}"
+                },
+                {
+                  "$kind": "Microsoft.LogAction",
+                  "$designer": {
+                    "id": "cjmymA"
+                  },
+                  "text": "$user"
+                },
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "5p8jN5"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${TextInput_Prompt_5p8jN5()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "property": "user.confirmation",
+                  "outputFormat": "${toLower(this.value)}"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "zQA3oo"
+                  },
+                  "condition": "user.confirmation == 'yes'",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "ICNLJU"
+                      },
+                      "property": "user.file"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "Y7noNe"
+                      },
+                      "activity": "${SendActivity_Y7noNe()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "jqH5YM"
+                      }
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.HttpRequest",
+                      "$designer": {
+                        "id": "Q0s0gs"
+                      },
+                      "method": "POST",
+                      "resultProperty": "user.fileResponse",
+                      "responseType": "json",
+                      "url": "https://westus.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessImage/FindFaces",
+                      "headers": {
+                        "Ocp-Apim-Subscription-Key": "d52162dc83f74f6db2af984eeed8b6bb"
+                      },
+                      "body": {
+                        "DataRepresentation": "URL",
+                        "Value": "${user.url}"
+                      }
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "NB2kga"
+                      },
+                      "condition": "user.fileResponse.statusCode == 200",
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "IU1da2"
+                          },
+                          "activity": "${SendActivity_IU1da2()}"
+                        },
+                        {
+                          "$kind": "Microsoft.LogAction",
+                          "$designer": {
+                            "id": "v0JwaS"
+                          },
+                          "text": "user.fileResponse"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.IfCondition",
+                          "$designer": {
+                            "id": "gqs70x"
+                          },
+                          "condition": "user.fileResponse.content.Result == true",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "Zt2ovW"
+                              },
+                              "activity": "${SendActivity_Zt2ovW()}"
+                            },
+                            {
+                              "$kind": "Microsoft.HttpRequest",
+                              "$designer": {
+                                "id": "D9CKix"
+                              },
+                              "method": "POST",
+                              "url": "https://uploadtoblobphoto.azurewebsites.net/api/HttpTrigger1?code=NVlzxHT3akJLLHGtgVOM7QbymhVpy1dFufLhXrzdUD44iUgn9271tg==",
+                              "body": {
+                                "filename": "${turn.activity.from.id}",
+                                "url": "${user.url}"
+                              },
+                              "resultProperty": "user.blobResponse"
+                            },
+                            {
+                              "$kind": "Microsoft.LogAction",
+                              "$designer": {
+                                "id": "gmplOd"
+                              },
+                              "text": "${user}"
+                            }
+                          ],
+                          "elseActions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "IIWdhH"
+                              },
+                              "activity": "${SendActivity_IIWdhH()}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "Attachment",
+              "actions": [
+                {
+                  "$kind": "Microsoft.AttachmentInput",
+                  "$designer": {
+                    "id": "4F0bQ7"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${AttachmentInput_Prompt_4F0bQ7()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "property": "user.file"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "8vVHio"
+                  },
+                  "activity": "${SendActivity_8vVHio()}"
+                },
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "8pzZAo"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${TextInput_Prompt_8pzZAo()}",
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "defaultValueResponse": "",
+                  "property": "user.confirmation",
+                  "outputFormat": "${toLower(this.value)}"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "1zLbsA"
+                  },
+                  "condition": "user.confirmation == 'yes'",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.DeleteProperty",
+                      "$designer": {
+                        "id": "d1aLH1"
+                      },
+                      "property": "user.file"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "EjaPKa"
+                      },
+                      "activity": "${SendActivity_EjaPKa()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "0aoSZ8"
+                      }
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.HttpRequest",
+                      "$designer": {
+                        "id": "HgS8ap"
+                      },
+                      "method": "POST",
+                      "resultProperty": "user.fileResponse",
+                      "responseType": "json",
+                      "url": "https://westus.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessImage/FindFaces",
+                      "headers": {
+                        "Ocp-Apim-Subscription-Key": "d52162dc83f74f6db2af984eeed8b6bb"
+                      },
+                      "body": {
+                        "DataRepresentation": "URL",
+                        "Value": "${user.file.contentUrl}"
+                      }
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "LaNfvX"
+                      },
+                      "condition": "user.fileResponse.statusCode == 200",
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "J8Oiy9"
+                          },
+                          "activity": "${SendActivity_J8Oiy9()}"
+                        },
+                        {
+                          "$kind": "Microsoft.LogAction",
+                          "$designer": {
+                            "id": "wHzNow"
+                          },
+                          "text": "user.fileResponse"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.IfCondition",
+                          "$designer": {
+                            "id": "Fg9Y0u"
+                          },
+                          "condition": "user.fileResponse.content.Result == true",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "2XXRR5"
+                              },
+                              "activity": "${SendActivity_2XXRR5()}"
+                            }
+                          ],
+                          "elseActions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "6grmiw"
+                              },
+                              "activity": "${SendActivity_6grmiw()}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "JaX7Bb"
+              },
+              "activity": "${SendActivity_JaX7Bb()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperties",
+          "$designer": {
+            "id": "0MU2Pm"
+          },
+          "properties": [
+            "user.choice",
+            "user.fileResponse",
+            "user.confirmation",
+            "user.blobResponse"
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "RW5Y0s"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "QuarantinePhoto.lg",
+  "recognizer": "QuarantinePhoto.lu.qna",
+  "id": "QuarantinePhoto"
+}

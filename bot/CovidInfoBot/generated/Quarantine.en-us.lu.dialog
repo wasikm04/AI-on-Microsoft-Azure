@@ -1,0 +1,7 @@
+{
+    "$kind": "Microsoft.LuisRecognizer",
+    "id": "LUIS_Quarantine",
+    "applicationId": "=settings.luis.Quarantine_en_us_lu",
+    "endpoint": "=settings.luis.endpoint",
+    "endpointKey": "=settings.luis.endpointKey"
+}
