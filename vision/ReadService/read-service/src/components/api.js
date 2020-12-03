@@ -56,7 +56,11 @@ export async function sendOCRRequest(body) {
     const asyncVar = await fetch(OCR_ENDPOINT_READ, requestOptions)
     .then(response => response.json())
     .then(data => {
+        if(data.regions.length){
         return data.regions[0].lines;
+        } else {
+            return [{ 'words':[{'text':'Nie udało się rozpoznać znaków'}]}];
+        }
     });
     return asyncVar;
 }

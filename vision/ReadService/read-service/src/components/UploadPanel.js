@@ -18,6 +18,7 @@ class UploadPanel extends React.Component {
 
 
     uploadSingleFile(event) {
+        this.props.onDelete();
         const file = event.target.files[0]
         this.setState({
             file: URL.createObjectURL(file),
@@ -28,10 +29,10 @@ class UploadPanel extends React.Component {
 
     handleNewText(file) {
         sendOCRRequest(file).then((lines) => {
-            let text = '';
+            let text = 'OCR: \n\n';
             lines.forEach((obj) => {
                 obj.words.forEach((object) => {
-                    text = text + object.text;
+                    text = text + ' ' +object.text;
                 });
                 text = text + ' \n ';
             })
@@ -39,11 +40,10 @@ class UploadPanel extends React.Component {
         });
 
         sendRequest(file).then((lines) => {
-            let text = '';
+            let text = 'Analyze&Read: \n';
             lines.forEach((object) =>  {
                 text = text + '\n' + object.text;
             })
-            console.log(text);
             this.props.onChange(text);
         }); 
     }

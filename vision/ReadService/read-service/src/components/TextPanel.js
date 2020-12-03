@@ -7,25 +7,20 @@ class TextPanel extends React.Component {
         this.newlineText = this.newlineText.bind(this);
     }
 
-    newlineText(props) {
-        const text = props.text;
-        const newText = text.split('\n').map(str => <p>{str}</p>);
+    newlineText(text) {
+        const newText = text.split('\n').map(str => <h5 key={str}>{str}</h5>);
         return newText;
-      }
+    }
 
     render() {
         return (
             <Container className="pt-2">
                 <Row>
-                    <Col></Col>
-                    <Col xs={10}>
-                        {this.props.text !== null ?
-                            <Jumbotron>
-                                {this.newlineText(this.props)}
-                            </Jumbotron>
-                            : null}
-                    </Col>
-                    <Col></Col>
+                    {this.props.text.length ?
+                    this.props.text.map((textObj) => {
+                        let text = this.newlineText(textObj);
+                        return <Col xs={6}><Jumbotron className="text-center">{text}</Jumbotron></Col>;
+                    }) : null }
                 </Row>
             </Container>
         );
