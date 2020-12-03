@@ -5,6 +5,7 @@ class TextPanel extends React.Component {
     constructor(props) {
         super(props);
         this.newlineText = this.newlineText.bind(this);
+        this.download = this.download.bind(this);
     }
 
     newlineText(text) {
@@ -12,15 +13,26 @@ class TextPanel extends React.Component {
         return newText;
     }
 
+    download(id) {
+        console.log(id);
+        this.props.onDownload(id);
+    }
+
     render() {
         return (
             <Container className="pt-2">
                 <Row>
                     {this.props.text.length ?
-                    this.props.text.map((textObj) => {
-                        let text = this.newlineText(textObj);
-                        return <Col xs={6}><Jumbotron className="text-center">{text}</Jumbotron></Col>;
-                    }) : null }
+                        this.props.text.map((textObj, index) => {
+                            let text = this.newlineText(textObj);
+                            return <Col key={index} xs={6}>
+                                <Jumbotron className="text-center">
+                                    {text}
+                                    <button onClick={() => {this.download(index)}}>
+                                        Pobierz
+                                    </button>
+                                </Jumbotron></Col>;
+                        }) : null}
                 </Row>
             </Container>
         );

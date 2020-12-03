@@ -10,11 +10,22 @@ class App extends React.Component {
     this.state = { text: [] };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeDelete = this.handleChangeDelete.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
   }
 
   handleChange(text) {
     this.setState({ text: this.state.text.concat(text) });
   }
+
+  handleDownload(id) {
+    const element = document.createElement("a");
+    const file = new Blob([this.state.text[id]], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "File.txt";
+    document.body.appendChild(element); 
+    element.click();
+  }
+  
 
   handleChangeDelete() {
     this.setState({ text: [] });
@@ -30,7 +41,7 @@ class App extends React.Component {
         <Container fluid>
           <Row>
             <Col xl={6}><UploadPanel onChange={this.handleChange} onDelete={this.handleChangeDelete} /></Col>
-            <Col xl={6}><TextPanel text={this.state.text} /></Col>
+            <Col xl={6}><TextPanel text={this.state.text}  onDownload={this.handleDownload}/></Col>
           </Row>
         </Container>
       </div>
