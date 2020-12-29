@@ -13,3 +13,7 @@ Bot - [Sprawozdanie oraz Demo](https://github.com/wasikm04/AI-on-Microsoft-Azure
 Lab 4, 5, 6 - [Computer Vision](https://github.com/wasikm04/AI-on-Microsoft-Azure/blob/master/vision/Computer%20Vision.md)        
 
 Vision - [Sprawozdanie oraz Demo](https://github.com/wasikm04/AI-on-Microsoft-Azure/blob/master/vision/Vision%20Report%20and%20Architecture.md), [Kod](https://github.com/wasikm04/AI-on-Microsoft-Azure/blob/master/vision/ReadService/read-service)
+
+#
+
+Auto ML - [Notebook](https://github.com/wasikm04/AI-on-Microsoft-Azure/blob/master/ml/Classification.ipynb)
